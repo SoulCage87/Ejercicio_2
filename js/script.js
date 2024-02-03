@@ -2,7 +2,7 @@ let btncal = document.getElementById('cal');
 let btneli = document.getElementById('eliminar');
 
 btncal.addEventListener('click', calcular);
-btneli.addEventListener('click', eliminar);
+btneli.addEventListener('click', seguro);
 
 function calcular() {
     let n1 = parseFloat(document.getElementById('nota1').value);
@@ -13,21 +13,21 @@ function calcular() {
     if (n1 <= 30 && n2 <= 30 && n3 <= 40) {
       let op = n1 + n2 + n3;
       if (op < 59) {
-        alert('Usted está reprobado');
+        mensaje("error","Oh! Mala Suerte :(",`Usted esta reprobado con ${op}`);
         resultado.innerHTML = 'Su nota final es de: '+op;
       }else if(op >= 60 && op <= 79){
-        alert('Usted es Bueno')
+        mensaje("question","Hmmm, Creo que debes mejorar :D", `Usted es Bueno con ${op}`);
         resultado.innerHTML = 'Su nota final es de: '+op;
       }else if(op >= 80 && op <= 89){
-         alert('Usted es Muy Bueno')
+         mensaje("success","Oye, Creo que eres bueno en esto :)", `Usted es Muy Bueno con ${op}`);
          resultado.innerHTML = 'Su nota final es de: '+op;
       } else {
-        alert('Usted es Sobresaliente')
+        mensaje("success", "Enserio lo hiciste? Impresionante...", `Usted es Sobresaliente con ${op}`);
         resultado.innerHTML = 'Su nota final es de: '+op;
         
       }
     } else {
-      alert("La nota máxima para cada parcial es de 30");
+     mensaje("warning", "Cuidado!","Las notas deben ser mayores a 30 y del tercer parcial mayor a 40");
     }
   }
 
@@ -38,5 +38,29 @@ function calcular() {
    document.getElementById('res').innerHTML = '';
 
   }
+
+  function mensaje(icon, title,text) {
+    Swal.fire({
+        icon: icon,
+        title: title,
+        text: text,
+      });
+  }
   
+  function seguro(){
+    Swal.fire({
+        title: "¿Eliminar Resultados?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "NOOOOOOO!",
+        denyButtonText: `Si, hazlo :D`
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Okok No lo borro y ya esta", "", "error");
+        } else if (result.isDenied) {
+            eliminar();
+          Swal.fire("Tus notas han sido borradas, att: RubRub...", "", "success");
+        }
+      });
+  }
 
