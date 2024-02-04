@@ -27,7 +27,7 @@ function calcular() {
         
       }
     } else {
-     mensaje("warning", "Cuidado!","Las notas deben ser mayores a 30 y del tercer parcial mayor a 40");
+     mensaje("warning", "Cuidado!","Las notas deben ser menores a 30 y del tercer parcial menor a 40");
     }
   }
 
